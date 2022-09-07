@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\V1\Category\StoreRequest;
-use App\Http\Requests\Api\V1\Category\UpdateRequest;
-use App\Services\Api\V1\Category\Service;
+use App\Http\Requests\Api\V1\Post\StoreRequest;
+use App\Http\Requests\Api\V1\Post\UpdateRequest;
+use App\Services\Api\V1\Post\Service;
 
-class CategoryController extends Controller
+class PostController extends Controller
 {
     protected $service;
 
@@ -23,19 +23,19 @@ class CategoryController extends Controller
      *
      *
      *  @OA\Get(
-     *      path="/api/v1/category",
-     *      summary="Get all categories",
-     *      description="Get all categories",
+     *      path="/api/v1/post",
+     *      summary="Get all posts",
+     *      description="Get all posts",
      *      security={{"bearerAuth":{}}},
-     *      tags={"Category"},
+     *      tags={"Post"},
      *      @OA\Response(
      *          response=200,
-     *          description="Get categories success",
+     *          description="Get posts success",
      *          @OA\JsonContent(
      *              @OA\Property(
      *                  property="data",
      *                  type="array",
-     *                  @OA\Items(ref="#/components/schemas/CategoryResource")
+     *                  @OA\Items(ref="#/components/schemas/PostResource")
      *              )
      *          )
      *      )
@@ -54,20 +54,20 @@ class CategoryController extends Controller
      *
      *
      *  @OA\Post(
-     *      path="/api/v1/category",
-     *      summary="Create category",
-     *      description="Create category.",
-     *      tags={"Category"},
+     *      path="/api/v1/post",
+     *      summary="Create post",
+     *      description="Create post.",
+     *      tags={"Post"},
      *      security={{"bearerAuth":{}}},
      *      @OA\RequestBody(
      *          required=true,
      *          description="Parameters",
-     *          @OA\JsonContent(ref="#/components/schemas/CategoryRequest")
+     *          @OA\JsonContent(ref="#/components/schemas/PostRequest")
      *      ),
      *      @OA\Response(
      *          response=201,
-     *          description="Create category success",
-     *          @OA\JsonContent(ref="#/components/schemas/CategoryResource")
+     *          description="Create post success",
+     *          @OA\JsonContent(ref="#/components/schemas/PostResource")
      *      ),
      *      @OA\Response(
      *          response=422,
@@ -78,9 +78,7 @@ class CategoryController extends Controller
     public function store(StoreRequest $request)
     {
         $data = $request->validated();
-        $res = $this->service->store($data);
-
-        return $res;
+        return $this->service->store($data);
     }
 
     /**
@@ -91,11 +89,11 @@ class CategoryController extends Controller
      *
      *
      *  @OA\Get(
-     *      path="/api/v1/category/{id}",
-     *      summary="Get category",
-     *      description="Get category",
+     *      path="/api/v1/post/{id}",
+     *      summary="Get post",
+     *      description="Get post",
      *      security={{"bearerAuth":{}}},
-     *      tags={"Category"},
+     *      tags={"Post"},
      *      @OA\Parameter(
      *          in="path",
      *          name="id",
@@ -104,18 +102,18 @@ class CategoryController extends Controller
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="Get category success",
-     *          @OA\JsonContent(ref="#/components/schemas/CategoryResource")
+     *          description="Get post success",
+     *          @OA\JsonContent(ref="#/components/schemas/PostResource")
      *      ),
      *      @OA\Response(
      *          response=404,
-     *          description="Category does not exist"
+     *          description="Post does not exist"
      *      )
      *  )
      */
-    public function show($id)
+    public function show($post)
     {
-        return $this->service->show($id);
+        return $this->service->show($post);
     }
 
     /**
@@ -127,10 +125,10 @@ class CategoryController extends Controller
      *
      *
      *  @OA\Put(
-     *      path="/api/v1/category/{id}",
-     *      summary="Update category",
-     *      description="Update category by id",
-     *      tags={"Category"},
+     *      path="/api/v1/post/{id}",
+     *      summary="Update post",
+     *      description="Update post by id",
+     *      tags={"Post"},
      *      security={{"bearerAuth":{}}},
      *      @OA\Parameter(
      *          in="path",
@@ -141,25 +139,23 @@ class CategoryController extends Controller
      *      @OA\RequestBody(
      *          required=true,
      *          description="Parameters",
-     *          @OA\JsonContent(ref="#/components/schemas/CategoryRequest")
+     *          @OA\JsonContent(ref="#/components/schemas/PostRequest")
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="Update category success",
-     *          @OA\JsonContent(ref="#/components/schemas/CategoryResource")
+     *          description="Update post success",
+     *          @OA\JsonContent(ref="#/components/schemas/PostResource")
      *      ),
      *      @OA\Response(
      *          response=404,
-     *          description="Category does not exist"
+     *          description="Post does not exist"
      *      )
      *  )
      */
-    public function update(UpdateRequest $request, $id)
+    public function update(UpdateRequest $request, $post)
     {
         $data = $request->validated();
-        $res = $this->service->update($data, $id);
-
-        return $res;
+        return $this->service->update($post, $data);
     }
 
     /**
@@ -170,10 +166,10 @@ class CategoryController extends Controller
      *
      *
      *  @OA\Delete(
-     *      path="/api/v1/category/{id}",
-     *      summary="Delete category",
-     *      description="Delete category.",
-     *      tags={"Category"},
+     *      path="/api/v1/post/{id}",
+     *      summary="Delete post",
+     *      description="Delete post.",
+     *      tags={"Post"},
      *      security={{"bearerAuth":{}}},
      *      @OA\Parameter(
      *          in="path",
@@ -183,17 +179,17 @@ class CategoryController extends Controller
      *      ),
      *      @OA\Response(
      *          response=204,
-     *          description="Delete category success",
+     *          description="Delete post success",
      *          @OA\MediaType(mediaType="application/json")
      *      ),
      *      @OA\Response(
      *          response=404,
-     *          description="Category does not exist",
+     *          description="Post does not exist"
      *      )
      *  )
      */
-    public function destroy($id)
+    public function destroy($post)
     {
-        return $this->service->destroy($id);
+        return $this->service->destroy($post);
     }
 }

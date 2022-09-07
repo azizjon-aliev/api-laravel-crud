@@ -26,7 +26,7 @@ class Service
 
             DB::beginTransaction();
 
-            $cat = Category::fistOrCreate(['title' => $data['title']]);
+            $cat = Category::firstOrCreate(['title' => $data['title']]);
 
             DB::commit();
 

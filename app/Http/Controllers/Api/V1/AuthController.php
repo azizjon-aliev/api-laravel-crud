@@ -20,6 +20,33 @@ class AuthController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     *
+     *
+     *  @OA\Post(
+     *      path="/api/v1/login",
+     *      summary="Login",
+     *      description="Authenticate the request's credentials.",
+     *      tags={"Auth"},
+     *      @OA\RequestBody(
+     *          required=true,
+     *          description="Parameters",
+     *          @OA\JsonContent(
+     *              required={"email","password"},
+     *              @OA\Property(property="email", type="string", example="example@gmail.com"),
+     *              @OA\Property(property="password", type="string", example="password")
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Login success",
+     *          @OA\JsonContent(ref="#/components/schemas/AuthResource")
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Validation failed"
+     *      )
+     *  )
      */
     public function login(LoginRequest $request)
     {
@@ -34,6 +61,34 @@ class AuthController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     *
+     *
+     *  @OA\Post(
+     *      path="/api/v1/register",
+     *      summary="Register",
+     *      description="Authenticate the request's credentials.",
+     *      tags={"Auth"},
+     *      @OA\RequestBody(
+     *          required=true,
+     *          description="Parameters",
+     *          @OA\JsonContent(
+     *              required={"name", "email", "password", "confirmation_password"},
+     *              @OA\Property(property="name", type="string", example="example name"),
+     *              @OA\Property(property="email", type="string", example="example@gmail.com"),
+     *              @OA\Property(property="password", type="string", example="password"),
+     *              @OA\Property(property="password_confirmation", type="string", example="password")
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Register success",
+     *          @OA\JsonContent(ref="#/components/schemas/AuthResource")
+     *      ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Validation failed"
+     *      )
+     *  )
      */
     public function register(RegisterRequest $request)
     {
