@@ -26,8 +26,6 @@ php artisan key:generate
 ```
 php artisan migrate
 ```
-and select one of available templates
-
 8. Type:
 ```
 php artisan passport:install
